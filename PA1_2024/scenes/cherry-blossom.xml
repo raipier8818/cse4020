@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<scene>
+  <camera>
+    <viewPoint>0 0 5</viewPoint>
+    <viewDir>0 0 -1</viewDir>
+    <projNormal>0 0 -1</projNormal>
+    <projDistance>1</projDistance>
+    <viewUp>0 1 0</viewUp>
+    <viewWidth>1.5</viewWidth>
+    <viewHeight>1.5</viewHeight>
+  </camera>
+  <image>
+    300 300
+  </image>
+  <shader name="pink" type="Lambertian">
+    <diffuseColor>1 0.7 0.8</diffuseColor>
+  </shader>
+  <!-- 5개의 꽃잎 추가 -->
+  <surface type="Sphere">
+    <shader ref="pink" />
+    <radius>0.5</radius>
+    <center>1 0 0</center>
+  </surface>
+  <surface type="Sphere">
+    <shader ref="pink" />
+    <radius>0.5</radius>
+    <center>-1 0 0</center>
+  </surface>
+  <surface type="Sphere">
+    <shader ref="pink" />
+    <radius>0.5</radius>
+    <center>0 1 0</center>
+  </surface>
+  <surface type="Sphere">
+    <shader ref="pink" />
+    <radius>0.5</radius>
+    <center>0 -1 0</center>
+  </surface>
+  <surface type="Sphere">
+    <shader ref="pink" />
+    <radius>0.5</radius>
+    <center>0 0 1</center>
+  </surface>
+  <light>
+    <position>4 0 2</position>
+    <intensity>1 1 1</intensity>
+  </light>
+</scene>
