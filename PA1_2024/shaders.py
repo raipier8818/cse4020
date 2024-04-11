@@ -4,11 +4,11 @@ from light import Light
 from surfaces import Surface
 
 class Shader:
-    def __init__(self, lights: list[Light]) -> None:
+    def __init__(self, lights: list) -> None:
         self.lights = lights
         pass
 
-    def shade(self, ray: Ray, t: float, normal: np.ndarray, hitSurface: Surface, surfaces: list[Surface]) -> np.ndarray:
+    def shade(self, ray: Ray, t: float, normal: np.ndarray, hitSurface: Surface, surfaces: list) -> np.ndarray:
         pass
 
 class ShaderPhong(Shader):
@@ -18,7 +18,7 @@ class ShaderPhong(Shader):
         self.specularColor = specularColor
         self.exponent = exponent
     
-    def shadow(self, ray: Ray, t: float, light: Ray, hitSurface: Surface, surfaces: list[Surface]) -> bool:
+    def shadow(self, ray: Ray, t: float, light: Ray, hitSurface: Surface, surfaces: list) -> bool:
         p = ray.origin + t * ray.direction
         for surface in surfaces:
             if surface != hitSurface:
@@ -27,7 +27,7 @@ class ShaderPhong(Shader):
                     return True
         return False
     
-    def shade(self, ray: Ray, t: float, normal: np.ndarray, hitSurface: Surface, surfaces: list[Surface]) -> np.ndarray:
+    def shade(self, ray: Ray, t: float, normal: np.ndarray, hitSurface: Surface, surfaces: list) -> np.ndarray:
         #L_s = k_s * I * max(0, n . h)^p
         p = ray.origin + t * ray.direction
         L_s = np.zeros(3)
@@ -54,7 +54,7 @@ class ShaderLambertian(Shader):
         super().__init__(lights)
         self.diffuseColor = diffuseColor
 
-    def shadow(self, ray: Ray, t: float, light: Ray, hitSurface: Surface, surfaces: list[Surface]) -> bool:
+    def shadow(self, ray: Ray, t: float, light: Ray, hitSurface: Surface, surfaces: list) -> bool:
         p = ray.origin + t * ray.direction
         for surface in surfaces:
             if surface != hitSurface:
@@ -63,7 +63,7 @@ class ShaderLambertian(Shader):
                     return True
         return False
     
-    def shade(self, ray: Ray, t: float, normal: np.ndarray, hitSurface: Surface, surfaces: list[Surface]) -> np.ndarray:
+    def shade(self, ray: Ray, t: float, normal: np.ndarray, hitSurface: Surface, surfaces: list) -> np.ndarray:
         p = ray.origin + t * ray.direction
         L_d = np.zeros(3)
         for light in self.lights:

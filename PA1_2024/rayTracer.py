@@ -63,7 +63,7 @@ def elementToLight(element):
     position = np.array(element.find('position').text.split()).astype(np.float64)
     return Light(position, intensity)
 
-def trace(ray: Ray, surfaces: list[Surface]):
+def trace(ray: Ray, surfaces: list):
     tmin = np.inf
     hitSurface = None
     for surface in surfaces:
@@ -73,7 +73,7 @@ def trace(ray: Ray, surfaces: list[Surface]):
             hitSurface = surface
     return tmin, hitSurface
 
-def shade(ray: Ray, tmin: float, shaders: dict[str, Shader], hitSurface: Surface, surfaces: list[Surface]):
+def shade(ray: Ray, tmin: float, shaders: dict, hitSurface: Surface, surfaces: list):
     p = ray.origin + tmin * ray.direction
     if tmin < np.inf:
         return Color(shaders[hitSurface.shaderName].shade(ray, tmin, hitSurface.normal(p), hitSurface, surfaces)).gammaCorrect(2.2).toUINT8()
