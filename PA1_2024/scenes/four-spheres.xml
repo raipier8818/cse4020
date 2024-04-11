@@ -7,7 +7,6 @@
     <viewPoint>5 4.5 4</viewPoint>
     <viewDir>-5 -3.5 -4</viewDir>
     <projNormal>5 3.5 4</projNormal>
-    <projDistance>1</projDistance>
     <viewUp>0 1 0</viewUp>
     <viewWidth>0.75</viewWidth>
     <viewHeight>0.76</viewHeight>

@@ -89,18 +89,44 @@ def main():
     surfaces = list(map(lambda x : elementToSurface(x) ,root.findall('surface')))
 
     # pdb.set_trace()
+    try:
+        viewPoint = np.array(root.find('camera').find('viewPoint').text.split()).astype(np.float64)
+    except:
+        print('viewPoint not found')
+        return
+    
+    try:
+        viewDir = np.array(root.find('camera').find('viewDir').text.split()).astype(np.float64)
+    except:
+        print('viewDir not found')
+        return
 
-    viewPoint = np.array(root.find('camera').find('viewPoint').text.split()).astype(np.float64)
-    viewDir = np.array(root.find('camera').find('viewDir').text.split()).astype(np.float64)
-    projNoraml = np.array(root.find('camera').find('projNormal').text.split()).astype(np.float64)
+    try:
+        projNoraml = np.array(root.find('camera').find('projNormal').text.split()).astype(np.float64)
+    except:
+        print('projNormal not found')
+        return        
     viewProjNormal=-1*viewDir  # you can safely assume this. (no examples will use shifted perspective camera)
-    viewUp = np.array(root.find('camera').find('viewUp').text.split()).astype(np.float64)
-    projDistance = float(root.find('camera').find('projDistance').text)
-    viewWidth = float(root.find('camera').find('viewWidth').text)
-    viewHeight = float(root.find('camera').find('viewHeight').text)
+    
+    try:
+        viewUp = np.array(root.find('camera').find('viewUp').text.split()).astype(np.float64)
+    except:
+        viewUp = np.array([0, 1, 0])
+
+    try:
+        projDistance = float(root.find('camera').find('projDistance').text)
+    except:
+        projDistance = 1.0
+
+    try:
+        viewWidth = float(root.find('camera').find('viewWidth').text)
+        viewHeight = float(root.find('camera').find('viewHeight').text)
+    except:
+        print('viewWidth or viewHeight not found')
+        return
 
     imgSize=np.array(root.findtext('image').split()).astype(np.int32)
-    print('imgSize', imgSize)
+    # print('imgSize', imgSize)
 
     camera = Camera(viewPoint, viewDir, projNoraml, viewUp, projDistance, viewWidth, viewHeight)
     camera.createRays(imgSize)
