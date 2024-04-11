@@ -18,6 +18,28 @@ from light import Light
 from ray import Ray
 from surfaces import Surface
 
+def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '#', printEnd = "\r"):
+    """
+    Call in a loop to create terminal progress bar
+    @params:
+        iteration   - Required  : current iteration (Int)
+        total       - Required  : total iterations (Int)
+        prefix      - Optional  : prefix string (Str)
+        suffix      - Optional  : suffix string (Str)
+        decimals    - Optional  : positive number of decimals in percent complete (Int)
+        length      - Optional  : character length of bar (Int)
+        fill        - Optional  : bar fill character (Str)
+        printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
+    """
+    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+    filledLength = int(length * iteration // total)
+    bar = fill * filledLength + '-' * (length - filledLength)
+    # print(f'\r{prefix} |{bar}| {percent}% {suffix}', end = printEnd)
+    print('{} |{}| {}% {}'.format(prefix, bar, percent, suffix), end = printEnd)
+    # Print New Line on Complete
+    if iteration == total: 
+        print()
+
 class Color:
     def __init__(self, R, G, B):
         self.color=np.array([R,G,B]).astype(np.float64)
@@ -143,7 +165,12 @@ def main():
             ray = camera.rays[j][i]
             tmin, hitSurface = trace(ray, surfaces)
             img[imgSize[1] - i - 1][j] = shade(ray, tmin, shaders, hitSurface, surfaces)
+            try:
+                printProgressBar(i * imgSize[1] + j + 1, imgSize[1] * imgSize[0], prefix = 'Progress:', suffix = 'Complete', length = 50)
+            except:
+                pass
 
+    print('Rendering complete')
     # save the image
     rawimg = Image.fromarray(img, 'RGB')
     #rawimg.save('out.png')
