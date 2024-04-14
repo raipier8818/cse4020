@@ -69,7 +69,19 @@ def render():
     glLoadIdentity()
 
     glOrtho(-5,5, -5,5, -8,8)
-    gluLookAt(5,3,5,    1,1,-1,     0,1,0)
+    
+    a = np.rad2deg(np.arctan(4/6))
+    b = np.rad2deg(np.arctan(2/np.sqrt(52)))    
+    v = np.array([0,0,-1])
+    v = np.array([[np.cos(np.radians(a)), 0, np.sin(np.radians(a))],
+                  [0, 1, 0],
+                  [-np.sin(np.radians(a)), 0, np.cos(np.radians(a))]]) @ v
+    w = np.cross(v, np.array([0,1,0]))    
+    
+    glRotatef(-a, 0,1,0)
+    glRotatef(b, w[0], w[1], w[2])
+    glTranslatef(-5, -3, -5)
+    
     drawFrame()
 
     glColor3ub(255, 255, 255)
