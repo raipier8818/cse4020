@@ -70,7 +70,7 @@ def main():
     if not glfw.init():
         return
     
-    window = glfw.create_window(480, 480, "Hello World", None, None)
+    window = glfw.create_window(480, 480, "2020063045-3-1", None, None)
 
     if not window:
         glfw.terminate()
